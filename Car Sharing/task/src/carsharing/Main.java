@@ -19,13 +19,27 @@ public class Main {
     public static void main(String[] args) {
         String dbName = Optional.ofNullable(args[1]).orElse("carS");
         CompanyDaoImpl companyDao;
+
+        String createCompany = "CREATE TABLE IF NOT EXISTS COMPANY\n" +
+                "(\n" +
+                "    ID   INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,\n" +
+                "    NAME VARCHAR(255) NOT NULL UNIQUE\n" +
+                ");";
+        String createCar = "CREATE TABLE IF NOT EXISTS CAR\n" +
+                "(\n" +
+                "    ID   INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,\n" +
+                "    NAME VARCHAR(255) NOT NULL UNIQUE,\n" +
+                "    K_ID INT NOT NULL,\n" +
+                "    CONSTRAINT fk_company FOREIGN KEY (ID) REFERENCES COMPANY(ID)\n" +
+                ");";
+
         try {
             Class.forName(JDBC_DRIVER);
             try(Connection conn = DriverManager.getConnection(DB_URL + "/" + dbName)) {
                 conn.setAutoCommit(true);
                 try(Statement stmt = conn.createStatement()) {
                     String sql = "CREATE TABLE IF NOT EXISTS COMPANY " +
-                            "(id INTEGER not NULL, " +
+                            "(id INTEGER NOT NULL, " +
                             " name VARCHAR(255))";
                     stmt.executeUpdate(sql);
 

@@ -2,7 +2,7 @@ package carsharing.dao;
 
 import java.util.List;
 
-public interface CompanyDao<T> {
+public interface Dao<T> {
     List<T> getAll();
 
     void save(T t);
@@ -10,5 +10,4 @@ public interface CompanyDao<T> {
     void update(T t, String[] params);
 
     void delete(T t);
-
 }

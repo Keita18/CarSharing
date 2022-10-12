@@ -6,7 +6,7 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompanyDaoImpl implements CompanyDao<Company> {
+public class CompanyDaoImpl implements Dao<Company> {
     private final Connection conn;
 
     public CompanyDaoImpl(Connection conn) {

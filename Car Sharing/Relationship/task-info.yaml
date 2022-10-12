@@ -1,17 +1,5 @@
 type: edu
 files:
-- name: src/carsharing/Main.java
-  visible: true
-  text: |-
-    package carsharing;
-
-    public class Main {
-
-        public static void main(String[] args) {
-            // write your code here
-        }
-    }
-  learner_created: false
 - name: test/DatabaseUtil.java
   visible: false
   text: |
@@ -555,6 +543,140 @@ files:
         }
     }
   learner_created: false
+- name: src/carsharing/model/Company.java
+  visible: true
+  text: |
+    package carsharing.model;
+
+    public class Company {
+        private int id;
+        private String name;
+
+        public Company(int id, String name) {
+            this.id = id;
+            this.name = name;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public void setId(int id) {
+            this.id = id;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public void setName(String name) {
+            this.name = name;
+        }
+
+        @Override
+        public String toString() {
+            return String.format("%d. %s", id, name);
+        }
+    }
+  learner_created: true
+- name: src/carsharing/model/Car.java
+  visible: true
+  learner_created: true
+- name: src/carsharing/dao/Dao.java
+  visible: true
+  text: |
+    package carsharing.dao;
+
+    import java.util.List;
+
+    public interface CompanyDao<T> {
+        List<T> getAll();
+
+        void save(T t);
+
+        void update(T t, String[] params);
+
+        void delete(T t);
+
+    }
+  learner_created: true
+- name: src/carsharing/Main.java
+  visible: true
+  text: |-
+    package carsharing;
+
+    public class Main {
+
+        public static void main(String[] args) {
+            // write your code here
+        }
+    }
+  learner_created: false
+- name: src/carsharing/dao/CompanyDaoImpl.java
+  visible: true
+  text: |
+    package carsharing.dao;
+
+    import carsharing.model.Company;
+
+    import java.sql.*;
+    import java.util.ArrayList;
+    import java.util.List;
+
+    public class CompanyDaoImpl implements CompanyDao<Company> {
+        private final Connection conn;
+
+        public CompanyDaoImpl(Connection conn) {
+            this.conn = conn;
+        }
+
+        @Override
+        public List<Company> getAll() {
+            String sql = "SELECT * FROM COMPANY ORDER BY id ";
+            List<Company> companyList = new ArrayList<>();
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                ResultSet rs = stmt.executeQuery();
+
+                while (rs.next()) {
+                    int id = rs.getInt(1);
+                    String name = rs.getString(2);
+                    companyList.add(new Company(id, name));
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return companyList;
+        }
+
+        @Override
+        public void save(Company company) {
+            String sql = "INSERT INTO COMPANY (NAME) VALUES(?)";
+
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, company.getName());
+                stmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+
+        @Override
+        public void update(Company company, String[] params) {
+
+        }
+
+        @Override
+        public void delete(Company company) {
+
+        }
+    }
+  learner_created: true
+- name: src/carsharing/dao/CarDaoImpl.java
+  visible: true
+  learner_created: true
+- name: src/carsharing/Driver.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/140/stages/760/implement#comment
 status: Unchecked
 record: -1
