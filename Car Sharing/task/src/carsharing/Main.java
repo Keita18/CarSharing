@@ -24,10 +24,20 @@ public class Main {
             try(Connection conn = DriverManager.getConnection(DB_URL + "/" + dbName)) {
                 conn.setAutoCommit(true);
                 try(Statement stmt = conn.createStatement()) {
-                    String sql = "CREATE TABLE   COMPANY " +
+                    String sql = "CREATE TABLE IF NOT EXISTS COMPANY " +
                             "(id INTEGER not NULL, " +
                             " name VARCHAR(255))";
                     stmt.executeUpdate(sql);
+
+                    String constraints = "ALTER TABLE COMPANY\n" +
+                            "ADD PRIMARY KEY (ID);\n" +
+                            "ALTER TABLE COMPANY\n" +
+                            "ALTER COLUMN ID INTEGER AUTO_INCREMENT;\n" +
+                            "ALTER TABLE COMPANY\n" +
+                            "ADD UNIQUE (NAME);\n" +
+                            "ALTER TABLE COMPANY\n" +
+                            "ALTER COLUMN NAME SET NOT NULL;";
+                    stmt.execute(constraints);
                 } catch (SQLException e) {
                     System.out.println("Error in stmt " + e);
                 }
@@ -38,68 +48,6 @@ public class Main {
             } catch (SQLException e) {
                 System.out.println("Error in conn " + e);
             }
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-    }
-
-    static void m1(String[] args) {
-        String dbName = Optional.ofNullable(args[1]).orElse("carS");
-        Connection conn = null;
-        Statement stmt = null;
-
-        try {
-            Class.forName(JDBC_DRIVER);
-
-            System.out.println("Connecting to database...");
-            conn = DriverManager.getConnection(DB_URL + "/" + dbName);
-            conn.setAutoCommit(true);
-
-            System.out.println("Creating table in given database...");
-            stmt = conn.createStatement();
-            String sql = "CREATE TABLE   COMPANY " +
-                    "(id INTEGER not NULL, " +
-                    " name VARCHAR(255))";
-            stmt.executeUpdate(sql);
-            System.out.println("Created table in given database...");
-
-            // STEP 4: Clean-up environment
-            stmt.close();
-            conn.close();
-        } catch (Exception se) {
-            //Handle errors for JDBC
-            se.printStackTrace();
-        }//Handle errors for Class.forName
-        finally {
-            //finally block used to close resources
-            try {
-                if (stmt != null) stmt.close();
-            } catch (SQLException se2) {
-                se2.printStackTrace();
-            } // nothing we can do
-            try {
-                if (conn != null) conn.close();
-            } catch (SQLException se) {
-                se.printStackTrace();
-            } //end finally try
-        } //end try
-        System.out.println("Goodbye!");
-    }
-
-
-    static void ex1(String[] args) {
-        String dbName = Optional.ofNullable(args[1]).orElse("carS");
-        try {
-            Class.forName(JDBC_DRIVER);
-            try (Connection conn = DriverManager.getConnection(DB_URL + "/" + dbName)) {
-                conn.setAutoCommit(true);
-                CompanyDaoImpl companyDao = new CompanyDaoImpl(conn);
-                start(companyDao);
-
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
@@ -134,6 +82,7 @@ public class Main {
                                 break;
                             case 2:
                                 System.out.println("Enter the company name:\n");
+                                sc.nextLine();
                                 String comName = sc.nextLine();
                                 companyDao.save(new Company(0, comName));
                                 System.out.println("The company was created!\n");
@@ -147,5 +96,4 @@ public class Main {
             }
         }
     }
-
 }

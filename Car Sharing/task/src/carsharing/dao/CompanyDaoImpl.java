@@ -33,10 +33,10 @@ public class CompanyDaoImpl implements CompanyDao<Company> {
 
     @Override
     public void save(Company company) {
-        String sql = "INSERT INTO COMPANY VALUES(?,?)";
+        String sql = "INSERT INTO COMPANY (NAME) VALUES(?)";
 
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(2, company.getName());
+            stmt.setString(1, company.getName());
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
