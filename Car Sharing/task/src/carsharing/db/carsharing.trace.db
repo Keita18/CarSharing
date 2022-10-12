@@ -1,3 +1,101 @@
-2022-10-12 13:24:43 jdbc[3]: exception
+2022-10-12 13:41:43 database: flush
+org.h2.message.DbException: General error: "java.lang.IllegalStateException: Writing to nio:D:/Etudes_Universitaire/3emeAnnee/Self_Learning/Car Sharing/Car Sharing/task/src/carsharing/db/carsharing.mv.db failed; length 4096 at 16384 [1.4.200/2]" [50000-200]
+	at org.h2.message.DbException.get(DbException.java:194)
+	at org.h2.message.DbException.convert(DbException.java:347)
+	at org.h2.mvstore.db.MVTableEngine$1.uncaughtException(MVTableEngine.java:93)
+	at org.h2.mvstore.MVStore.handleException(MVStore.java:2877)
+	at org.h2.mvstore.MVStore.panic(MVStore.java:481)
+	at org.h2.mvstore.MVStore.write(MVStore.java:1113)
+	at org.h2.mvstore.MVStore.storeNow(MVStore.java:1479)
+	at org.h2.mvstore.MVStore.store(MVStore.java:1334)
+	at org.h2.mvstore.MVStore.store(MVStore.java:1312)
+	at org.h2.mvstore.MVStore.commit(MVStore.java:1303)
+	at org.h2.mvstore.tx.TransactionStore.close(TransactionStore.java:333)
+	at org.h2.mvstore.db.MVTableEngine$Store.close(MVTableEngine.java:398)
+	at org.h2.engine.Database.closeOpenFilesAndUnlock(Database.java:1545)
+	at org.h2.engine.Database.closeImpl(Database.java:1454)
+	at org.h2.engine.Database.close(Database.java:1373)
+	at org.h2.engine.Database.removeSession(Database.java:1307)
+	at org.h2.engine.Session.close(Session.java:963)
+	at org.h2.jdbc.JdbcConnection.close(JdbcConnection.java:453)
+	at carsharing.Main.ex1(Main.java:27)
+	at carsharing.Main.main(Main.java:20)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.hyperskill.hstest.testing.execution.MainMethodExecutor.invokeMain(MainMethodExecutor.java:160)
+	at org.hyperskill.hstest.testing.execution.MainMethodExecutor.lambda$launch$1(MainMethodExecutor.java:188)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: General error: "java.lang.IllegalStateException: Writing to nio:D:/Etudes_Universitaire/3emeAnnee/Self_Learning/Car Sharing/Car Sharing/task/src/carsharing/db/carsharing.mv.db failed; length 4096 at 16384 [1.4.200/2]" [50000-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:505)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	... 31 more
+Caused by: java.lang.IllegalStateException: Writing to nio:D:/Etudes_Universitaire/3emeAnnee/Self_Learning/Car Sharing/Car Sharing/task/src/carsharing/db/carsharing.mv.db failed; length 4096 at 16384 [1.4.200/2]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:950)
+	at org.h2.mvstore.DataUtils.writeFully(DataUtils.java:479)
+	at org.h2.mvstore.FileStore.writeFully(FileStore.java:113)
+	at org.h2.mvstore.MVStore.write(MVStore.java:1111)
+	... 25 more
+Caused by: java.nio.channels.ClosedByInterruptException
+	at java.base/java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:199)
+	at java.base/sun.nio.ch.FileChannelImpl.endBlocking(FileChannelImpl.java:171)
+	at java.base/sun.nio.ch.FileChannelImpl.writeInternal(FileChannelImpl.java:883)
+	at java.base/sun.nio.ch.FileChannelImpl.write(FileChannelImpl.java:861)
+	at org.h2.store.fs.FileNio.write(FilePathNio.java:79)
+	at org.h2.mvstore.DataUtils.writeFully(DataUtils.java:475)
+	... 27 more
+2022-10-12 13:41:43 database: close
+org.h2.message.DbException: IO Exception: "Closing" [90028-200]
+	at org.h2.message.DbException.get(DbException.java:194)
+	at org.h2.mvstore.db.MVTableEngine$Store.close(MVTableEngine.java:421)
+	at org.h2.engine.Database.closeOpenFilesAndUnlock(Database.java:1545)
+	at org.h2.engine.Database.closeImpl(Database.java:1454)
+	at org.h2.engine.Database.close(Database.java:1373)
+	at org.h2.engine.Database.removeSession(Database.java:1307)
+	at org.h2.engine.Session.close(Session.java:963)
+	at org.h2.jdbc.JdbcConnection.close(JdbcConnection.java:453)
+	at carsharing.Main.ex1(Main.java:27)
+	at carsharing.Main.main(Main.java:20)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
+	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:568)
+	at org.hyperskill.hstest.testing.execution.MainMethodExecutor.invokeMain(MainMethodExecutor.java:160)
+	at org.hyperskill.hstest.testing.execution.MainMethodExecutor.lambda$launch$1(MainMethodExecutor.java:188)
+	at java.base/java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:539)
+	at java.base/java.util.concurrent.FutureTask.run(FutureTask.java:264)
+	at java.base/java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1136)
+	at java.base/java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:635)
+	at java.base/java.lang.Thread.run(Thread.java:833)
+Caused by: org.h2.jdbc.JdbcSQLNonTransientException: IO Exception: "Closing" [90028-200]
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:505)
+	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
+	... 21 more
+Caused by: java.lang.IllegalStateException: Writing to nio:D:/Etudes_Universitaire/3emeAnnee/Self_Learning/Car Sharing/Car Sharing/task/src/carsharing/db/carsharing.mv.db failed; length 4096 at 16384 [1.4.200/2]
+	at org.h2.mvstore.DataUtils.newIllegalStateException(DataUtils.java:950)
+	at org.h2.mvstore.DataUtils.writeFully(DataUtils.java:479)
+	at org.h2.mvstore.FileStore.writeFully(FileStore.java:113)
+	at org.h2.mvstore.MVStore.write(MVStore.java:1111)
+	at org.h2.mvstore.MVStore.storeNow(MVStore.java:1479)
+	at org.h2.mvstore.MVStore.store(MVStore.java:1334)
+	at org.h2.mvstore.MVStore.store(MVStore.java:1312)
+	at org.h2.mvstore.MVStore.commit(MVStore.java:1303)
+	at org.h2.mvstore.tx.TransactionStore.close(TransactionStore.java:333)
+	at org.h2.mvstore.db.MVTableEngine$Store.close(MVTableEngine.java:398)
+	... 19 more
+Caused by: java.nio.channels.ClosedByInterruptException
+	at java.base/java.nio.channels.spi.AbstractInterruptibleChannel.end(AbstractInterruptibleChannel.java:199)
+	at java.base/sun.nio.ch.FileChannelImpl.endBlocking(FileChannelImpl.java:171)
+	at java.base/sun.nio.ch.FileChannelImpl.writeInternal(FileChannelImpl.java:883)
+	at java.base/sun.nio.ch.FileChannelImpl.write(FileChannelImpl.java:861)
+	at org.h2.store.fs.FileNio.write(FilePathNio.java:79)
+	at org.h2.mvstore.DataUtils.writeFully(DataUtils.java:475)
+	... 27 more
+2022-10-12 13:46:43 jdbc[3]: exception
 org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "COMPANY" already exists; SQL statement:
 CREATE TABLE   COMPANY (id INTEGER not NULL,  name VARCHAR(255)) [42101-200]

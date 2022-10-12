@@ -338,15 +338,6 @@ files:
 - name: Car Sharing/task/src/carsharing/db/carsharing.trace.db
   visible: true
   learner_created: true
-- name: src/carsharing/dao/CompanyDaoImpl.java
-  visible: true
-  learner_created: true
-- name: src/carsharing/dao/CompanyDao.java
-  visible: true
-  learner_created: true
-- name: src/carsharing/model/Company.java
-  visible: true
-  learner_created: true
 - name: src/carsharing/Main.java
   visible: true
   text: |-
@@ -359,12 +350,24 @@ files:
         }
     }
   learner_created: false
+- name: src/carsharing/model/Company.java
+  visible: true
+  learner_created: true
+- name: src/carsharing/dao/CompanyDaoImpl.java
+  visible: true
+  learner_created: true
+- name: src/carsharing/dao/CompanyDao.java
+  visible: true
+  learner_created: true
+- name: src/carsharing/UserApplication.java
+  visible: true
+  learner_created: true
 feedback_link: https://hyperskill.org/projects/140/stages/759/implement#comment
 status: Failed
 feedback:
   message: |-
-    Wrong answer in test #4
+    Wrong answer in test #5
 
-    Can&#39;t find table named &#39;company&#39;
-  time: Wed, 12 Oct 2022 10:01:45 UTC
+    Looks like &#39;ID&#39; column in &#39;COMPANY&#39; table doesn&#39;t have PRIMARY KEY constraint.
+  time: Wed, 12 Oct 2022 10:46:45 UTC
 record: 2
