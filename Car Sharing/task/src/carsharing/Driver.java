@@ -64,9 +64,11 @@ public class Driver {
         List<Company> companyList = companyDao.getAll();
         if (companyList.isEmpty()) {
             System.out.println("The company list is empty!\n");
+            companyMenu();
         } else {
             System.out.println("Choose the company:");
             companyList.forEach(System.out::println);
+            System.out.println("0. Back");
             choice = scanner.nextInt();
             if (choice < 0 || choice > companyList.size()) {
                 System.out.println("choose company from list");
@@ -75,7 +77,7 @@ public class Driver {
                     companyMenu();
                 } else {
                     Company company = companyList.get(choice - 1);
-                    System.out.printf("'%s' company", company.getName());
+                    System.out.printf("'%s' company\n", company.getName());
                     carMenu(company.getId());
                 }
             }
@@ -109,8 +111,13 @@ public class Driver {
         List<Car> carList = carDao.getAll();
         if (carList.isEmpty()) {
             System.out.println("The car list is empty!");
+            carMenu(companyId);
         } else {
-            carList.forEach(System.out::println);
+            var index = 1;
+            for (Car car : carList) {
+                System.out.println(index +". " + car.getName());
+                index++;
+            }
             carMenu(companyId);
         }
     }
@@ -130,6 +137,6 @@ public class Driver {
         String carName = scanner.nextLine();
         carDao.save(new Car(0, carName, companyId));
         System.out.println("The car was created!\n");
-        companyMenu();
+        carMenu(companyId);
     }
 }
