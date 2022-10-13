@@ -31,6 +31,22 @@ public class CompanyDaoImpl implements Dao<Company> {
         return companyList;
     }
 
+    public Company getById(int id) {
+        String sql = "SELECT * FROM COMPANY WHERE ID=" +id;
+        Company company = null;
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int companyId = rs.getInt(1);
+                String name = rs.getString(2);
+                company = new Company(companyId, name);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return company;
+    }
+
     @Override
     public void save(Company company) {
         String sql = "INSERT INTO COMPANY (NAME) VALUES(?)";

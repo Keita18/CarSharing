@@ -2,6 +2,7 @@ package carsharing;
 
 import carsharing.dao.CarDaoImpl;
 import carsharing.dao.CompanyDaoImpl;
+import carsharing.dao.CustomerDaoImpl;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -27,6 +28,13 @@ public class Main {
             "    COMPANY_ID INT NOT NULL,\n" +
             "    CONSTRAINT fk_company FOREIGN KEY (COMPANY_ID) REFERENCES COMPANY(ID)\n" +
             ");";
+    static final String createCustomer = "CREATE TABLE IF NOT EXISTS CUSTOMER\n" +
+            "(\n" +
+            "    ID            INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,\n" +
+            "    NAME          VARCHAR(255) NOT NULL UNIQUE,\n" +
+            "    RENTED_CAR_ID INT,\n" +
+            "    CONSTRAINT fk_car FOREIGN KEY (RENTED_CAR_ID) REFERENCES CAR (ID)\n" +
+            ");";
 
     public static void main(String[] args) {
         String dbName = Optional.ofNullable(args[1]).orElse("carS");
@@ -39,11 +47,15 @@ public class Main {
 
                     stmt.executeUpdate(createCompany);
                     stmt.executeUpdate(createCar);
+                    stmt.executeUpdate(createCustomer);
                 } catch (SQLException e) {
                     System.out.println("Error in stmt " + e);
                 }
 
-                Driver driver = new Driver(new CompanyDaoImpl(conn), new CarDaoImpl(conn));
+                Driver driver = new Driver(
+                        new CompanyDaoImpl(conn),
+                        new CarDaoImpl(conn),
+                        new CustomerDaoImpl(conn));
                 driver.start();
 
             } catch (SQLException e) {

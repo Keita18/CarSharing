@@ -40,6 +40,23 @@ public class CarDaoImpl implements Dao<Car> {
         return carList;
     }
 
+    public Car getById(int id) {
+        String sql = "SELECT * FROM CAR WHERE ID=" +id;
+        Car car = null;
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int carId = rs.getInt(1);
+                String name = rs.getString(2);
+                int companyId = rs.getInt(3);
+                car = new Car(carId, name, companyId);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return car;
+    }
+
     @Override
     public void save(Car car) {
         String sql = "INSERT INTO CAR (NAME, COMPANY_ID) VALUES(?,?)";
