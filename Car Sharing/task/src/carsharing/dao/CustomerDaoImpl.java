@@ -23,6 +23,7 @@ public class CustomerDaoImpl implements Dao<Customer> {
                 int customerId = rs.getInt(1);
                 String name = rs.getString(2);
                 int rentedCarId = Optional.of(rs.getInt(3)).orElse(-1);
+                if (rentedCarId == 0) rentedCarId = -1;
                 customer = new Customer(customerId, name, rentedCarId);
             }
         } catch (SQLException e) {

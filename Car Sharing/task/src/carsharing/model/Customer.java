@@ -38,4 +38,9 @@ public class Customer {
     public void setRentedCarId(int rentedCarId) {
         this.rentedCarId = rentedCarId;
     }
+
+    @Override
+    public String toString() {
+        return String.format("%d. %s", id, name);
+    }
 }

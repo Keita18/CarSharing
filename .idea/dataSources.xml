@@ -22,5 +22,12 @@
       <jdbc-url>jdbc:h2:$PROJECT_DIR$/Car Sharing/task/src/carsharing/db/carsharing</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
+    <data-source source="LOCAL" name="carsharing [2]" uuid="6198ac04-eff7-435b-9e78-d7d5061686ef">
+      <driver-ref>h2.unified</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.h2.Driver</jdbc-driver>
+      <jdbc-url>jdbc:h2:$PROJECT_DIR$/src/carsharing/db/carsharing</jdbc-url>
+      <working-dir>$ProjectFileDir$</working-dir>
+    </data-source>
   </component>
 </project>

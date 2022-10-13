@@ -7,8 +7,10 @@ import carsharing.model.Car;
 import carsharing.model.Company;
 import carsharing.model.Customer;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class Driver {
     private final Scanner scanner = new Scanner(System.in);
@@ -108,7 +110,7 @@ public class Driver {
                     Car car = carDao.getById(customer.getRentedCarId());
                     Company company = companyDao.getById(car.getCompanyId());
                     System.out.println("Your rented car:\n"
-                            + car.getName() + "Company:\n" + company.getName());
+                            + car.getName() + "\nCompany:\n" + company.getName());
                 }
                 customerCarMenu(customerId);
                 break;
@@ -125,14 +127,17 @@ public class Driver {
             customerCarMenu(customerId);
         } else {
             System.out.println("Choose the company:");
-            companyList.forEach(System.out::println);
+            var index = 1;
+            for (Company company : companyList) {
+                System.out.println(index + ". " + company.getName());
+                index++;
+            }
             System.out.println("0. Back");
             choice = scanner.nextInt();
             if (choice == 0) {
                 customerCarMenu(customerId);
             } else {
                 Company company = companyList.get(choice - 1);
-                System.out.printf("'%s' company\n", company.getName());
                 buyCar(customerId, company);
             }
         }
@@ -141,14 +146,19 @@ public class Driver {
     private void buyCar(int customerId, Company company) {
         carDao.setCompanyId(company.getId());
         List<Car> carList = carDao.getAll();
+        List<Customer> customers = customerDao.getAll();
+        var rentedListId = customers.stream().map(Customer::getRentedCarId)
+                .filter(it -> it != -1).collect(Collectors.toList());
         if (carList.isEmpty()) {
             System.out.println("No available cars in the '"+company.getName()+"' company");
             availableCompanies(customerId);
         } else {
             var index = 1;
             for (Car car : carList) {
-                System.out.println(index + ". " + car.getName());
-                index++;
+                if (!rentedListId.contains(car.getId())) {
+                    System.out.println(index + ". " + car.getName());
+                    index++;
+                }
             }
             choice = scanner.nextInt();
             if (choice == 0) {
@@ -158,6 +168,7 @@ public class Driver {
                 Customer customer = customerDao.getById(customerId);
                 customer.setRentedCarId(car.getId());
                 customerDao.update(customer, null);
+                System.out.printf("You rented '%s'\n", car.getName());
                 customerCarMenu(customerId);
             }
         }
@@ -191,7 +202,11 @@ public class Driver {
             companyMenu();
         } else {
             System.out.println("Choose the company:");
-            companyList.forEach(System.out::println);
+            var index = 1;
+            for (Company company : companyList) {
+                System.out.println(index + ". " + company.getName());
+                index++;
+            }
             System.out.println("0. Back");
             choice = scanner.nextInt();
             if (choice < 0 || choice > companyList.size()) {
@@ -252,7 +267,7 @@ public class Driver {
         String comName = scanner.nextLine();
         customerDao.save(new Customer(comName));
         System.out.println("The customer was created!\n");
-        companyMenu();
+        managerMenu();
     }
 
     private void createCompany() {
