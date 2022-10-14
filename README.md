@@ -17,12 +17,12 @@ the project consists in developing a server-client app with a database containin
 3. Create a customer
 0. Exit
 
-**The Manager** have posibility to create, update, delete or to show companys, cars, 
+**The Manager** have posibility to create, update, delete or to show companies, cars, 
 customers and also to check the number of disponibles cars (car not rented)
 
 **Customer** can rent any car from any company if there are free cars and return or change it
 
-**Creater Customer** and new client to the database
+**Creater Customer** add new client to the database
 
 ## Run
 ``/greadlew run``
