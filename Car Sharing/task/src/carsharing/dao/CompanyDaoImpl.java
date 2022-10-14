@@ -19,7 +19,6 @@ public class CompanyDaoImpl implements Dao<Company> {
         List<Company> companyList = new ArrayList<>();
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
-
             while (rs.next()) {
                 int id = rs.getInt(1);
                 String name = rs.getString(2);
@@ -60,7 +59,7 @@ public class CompanyDaoImpl implements Dao<Company> {
     }
 
     @Override
-    public void update(Company company, String[] params) {
+    public void update(Company company) {
 
     }
 

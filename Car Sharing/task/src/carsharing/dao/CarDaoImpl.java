@@ -27,7 +27,6 @@ public class CarDaoImpl implements Dao<Car> {
         List<Car> carList = new ArrayList<>();
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             ResultSet rs = stmt.executeQuery();
-
             while (rs.next()) {
                 int id = rs.getInt(1);
                 String name = rs.getString(2);
@@ -71,7 +70,7 @@ public class CarDaoImpl implements Dao<Car> {
     }
 
     @Override
-    public void update(Car car, String[] params) {
+    public void update(Car car) {
 
     }
 

@@ -7,7 +7,6 @@ import carsharing.model.Car;
 import carsharing.model.Company;
 import carsharing.model.Customer;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -26,10 +25,10 @@ public class Driver {
     }
 
     public void start() {
-        managerMenu();
+        mainMenu();
     }
 
-    private void managerMenu() {
+    private void mainMenu() {
         System.out.println("1. Log in as a manager\n" +
                 "2. Log in as a customer\n" +
                 "3. Create a customer\n" +
@@ -39,7 +38,7 @@ public class Driver {
             case 0:
                 break;
             case 1:
-                companyMenu();
+                managerMenu();
                 break;
             case 2:
                 customerMenu();
@@ -49,7 +48,7 @@ public class Driver {
                 break;
             default:
                 System.out.println("Bad choice");
-                managerMenu();
+                mainMenu();
         }
     }
 
@@ -57,14 +56,14 @@ public class Driver {
         List<Customer> customers = customerDao.getAll();
         if (customers.isEmpty()) {
             System.out.println("The customer list is empty!");
-            managerMenu();
+            mainMenu();
         } else {
             System.out.println("Customer list:");
             customers.forEach(System.out::println);
             System.out.println("0. Back");
             choice = scanner.nextInt();
             if (choice == 0) {
-                managerMenu();
+                mainMenu();
             } else {
                 customerCarMenu(choice);
             }
@@ -80,7 +79,7 @@ public class Driver {
         Customer customer;
         switch (choice) {
             case 0:
-                managerMenu();
+                mainMenu();
                 break;
             case 1:
                 customer = customerDao.getById(customerId);
@@ -97,7 +96,7 @@ public class Driver {
                     System.out.println("You didn't rent a car!");
                 } else {
                     customer.setRentedCarId(-1);
-                    customerDao.update(customer, null);
+                    customerDao.update(customer);
                     System.out.println("You've returned a rented car!");
                 }
                 customerCarMenu(customerId);
@@ -167,21 +166,21 @@ public class Driver {
                 Car car = carList.get(choice - 1);
                 Customer customer = customerDao.getById(customerId);
                 customer.setRentedCarId(car.getId());
-                customerDao.update(customer, null);
+                customerDao.update(customer);
                 System.out.printf("You rented '%s'\n", car.getName());
                 customerCarMenu(customerId);
             }
         }
     }
 
-    private void companyMenu() {
+    private void managerMenu() {
         System.out.println("1. Company list\n" +
                 "2. Create a company\n" +
                 "0. Back");
         choice = scanner.nextInt();
         switch (choice) {
             case 0:
-                managerMenu();
+                mainMenu();
                 break;
             case 1:
                 printCompanyList();
@@ -191,7 +190,7 @@ public class Driver {
                 break;
             default:
                 System.out.println("Bad choice, Try again:");
-                companyMenu();
+                managerMenu();
         }
     }
 
@@ -199,7 +198,7 @@ public class Driver {
         List<Company> companyList = companyDao.getAll();
         if (companyList.isEmpty()) {
             System.out.println("The company list is empty!\n");
-            companyMenu();
+            managerMenu();
         } else {
             System.out.println("Choose the company:");
             var index = 1;
@@ -213,7 +212,7 @@ public class Driver {
                 System.out.println("choose company from list");
             } else {
                 if (choice == 0) {
-                    companyMenu();
+                    managerMenu();
                 } else {
                     Company company = companyList.get(choice - 1);
                     System.out.printf("'%s' company\n", company.getName());
@@ -231,7 +230,7 @@ public class Driver {
         choice = scanner.nextInt();
         switch (choice) {
             case 0:
-                companyMenu();
+                managerMenu();
                 break;
             case 1:
                 printCarList(companyId);
@@ -241,7 +240,7 @@ public class Driver {
                 break;
             default:
                 System.out.println("Bad choice, Try again:");
-                companyMenu();
+                managerMenu();
         }
     }
 
@@ -267,7 +266,7 @@ public class Driver {
         String comName = scanner.nextLine();
         customerDao.save(new Customer(comName));
         System.out.println("The customer was created!\n");
-        managerMenu();
+        mainMenu();
     }
 
     private void createCompany() {
@@ -276,7 +275,7 @@ public class Driver {
         String comName = scanner.nextLine();
         companyDao.save(new Company(0, comName));
         System.out.println("The company was created!\n");
-        companyMenu();
+        managerMenu();
     }
 
     private void createCar(int companyId) {

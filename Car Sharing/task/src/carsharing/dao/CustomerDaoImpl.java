@@ -62,7 +62,7 @@ public class CustomerDaoImpl implements Dao<Customer> {
     }
 
     @Override
-    public void update(Customer customer, String[] params) {
+    public void update(Customer customer) {
         String sql = "UPDATE CUSTOMER SET RENTED_CAR_ID=? WHERE ID=?";
         try (PreparedStatement stmt = conn.prepareStatement(sql)) {
             if (customer.getRentedCarId() == -1)
