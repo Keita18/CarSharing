@@ -4,7 +4,6 @@ public class Customer {
     private int id;
     private String name;
     private int rentedCarId = -1;
-
     public Customer(int id, String name, int rentedCarId) {
         this.id = id;
         this.name = name;

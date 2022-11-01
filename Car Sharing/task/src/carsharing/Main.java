@@ -38,7 +38,6 @@ public class Main {
 
     public static void main(String[] args) {
         String dbName = Optional.ofNullable(args[1]).orElse("carS");
-
         try {
             Class.forName(JDBC_DRIVER);
             try (Connection conn = DriverManager.getConnection(DB_URL + "/" + dbName)) {

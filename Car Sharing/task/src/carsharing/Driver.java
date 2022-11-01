@@ -222,7 +222,6 @@ public class Driver {
         }
     }
 
-
     private void carMenu(int companyId) {
         System.out.println("1. Car list\n" +
                 "2. Create a car\n" +
